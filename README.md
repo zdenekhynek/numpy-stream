@@ -1,10 +1,10 @@
 README.md
 # NUMPY STREAM
 
-## API 
+## Server 
 
 ```
-cd api
+cd server
 ```
 
 ```
