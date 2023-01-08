@@ -61,12 +61,14 @@ const DTYPES = {
 function parseArrayBuffer(arrayBuffer) {
   // const version = arrayBufferContents.slice(6, 8); // Uint8-encoded
   const headerLengthBytes = 1;
-  const headerLength = new DataView(arrayBuffer.slice(0, headerLengthBytes)).getUint8(0);
-  
+  const headerLength = new DataView(
+    arrayBuffer.slice(0, headerLengthBytes)
+  ).getUint8(0);
+
   const offsetBytes = headerLengthBytes + headerLength;
 
   const hcontents = new TextDecoder("utf-8").decode(
-    new Uint8Array(arrayBuffer.slice(headerLengthBytes, headerLengthBytes + headerLength))
+    new Uint8Array(arrayBuffer.slice(headerLengthBytes, offsetBytes))
   );
 
   const replacedHcontents = hcontents
@@ -74,19 +76,17 @@ function parseArrayBuffer(arrayBuffer) {
     .replace(/'/g, '"')
     .replace("(", "[")
     .replace(/,*\),*/g, "]");
-  console.log(replacedHcontents, hcontents);
 
   const header = JSON.parse(replacedHcontents);
   const shape = header.shape;
   const dtype = DTYPES[header.descr];
 
-  const nums = new dtype["arrayConstructor"](arrayBuffer, offsetBytes);
+  const nums = new dtype["arrayConstructor"](arrayBuffer.slice(offsetBytes));
 
   return {
     dtype: dtype.name,
     data: nums,
     shape,
-    fortranOrder: header.fortran_order,
   };
 }
 
