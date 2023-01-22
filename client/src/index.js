@@ -95,7 +95,7 @@ async function fetchStreamResp(
   dtype,
   len
 ) {
-  const url = `${endpoint}?dtype=${dtype}&len=${len}`;
+  const url = `${endpoint}?dtype=${dtype}&length=${len}`;
   console.log(`Getting response for ${url}`);
   console.log("=================================");
 
@@ -155,7 +155,7 @@ async function fetchStreamResp(
     "<f4",
     "<f8",
   ];
-  const numItems = [4]; //Math.pow(10, 2), Math.pow(10, 3), Math.pow(10, 4)];
+  const numItems = [Math.pow(10, 3), Math.pow(10, 4), Math.pow(10, 5), Math.pow(10, 6)];
 
   for (let y = 0; y < numItems.length; y++) {
     const len = numItems[y];

@@ -1,6 +1,8 @@
-README.md
+# NUMERICAL DATA FROM PYTHON TO JAVASCRIPT
 
-# NUMPY STREAM
+An example of sending numerical data from numpy array, co, commonly used as binary data in an octet-stream which can be loaded to JavaScript typed arrays for efficient processing and visualisation.
+
+There are snippets loading .npyc files in Javascript, however this project shows how to send the numerical data without storing them into a file first.
 
 ## Server 
 

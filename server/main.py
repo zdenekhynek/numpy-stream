@@ -32,17 +32,17 @@ def hello():
 
 
 @app.get("/utf")
-async def utf():
-    numpy_arr = np.array([1, 2, 3, 4])
+async def utf(dtype: str = "<f8", length: int = 4):
+    numpy_arr = np.arange(length, dtype=np.dtype(dtype))
     return json.dumps(numpy_arr.tolist())
 
 
 @app.get("/octet-stream/", response_class=OctetStreamResponse)
-def stream(dtype: str = "f8", arr_len: int = 4):
-    numpy_arr = np.arange(arr_len, dtype=np.dtype(dtype))
-    numpy_bytes = numpy_arr.tobytes()  # numpy_arr.reshape((2, 2)).tobytes()
+def stream(dtype: str = "<f8", length: int = 4):
+    numpy_arr = np.arange(length, dtype=np.dtype(dtype))
+    numpy_bytes = numpy_arr.tobytes()
 
-    header_dic = {"shape": f"[{arr_len}, 1]", "descr": dtype}
+    header_dic = {"shape": f"[{length}, 1]", "descr": dtype}
     header = write_array_header(header_dic)
     header_bytes = header.encode("utf-8")
     header_len = len(header_bytes)
